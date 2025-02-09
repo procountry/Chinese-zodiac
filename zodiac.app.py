@@ -3,7 +3,7 @@ import pandas as pd
 
 # 🐉 Correct Chinese Zodiac Cycle
 zodiac_animals = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"]
-elements = ["Metal", "Water", "Wood", "Fire", "Earth"]  # Correct 10-year cycle
+elements = ["Wood", "Fire", "Earth", "Metal", "Water"]  # Correct order every 2 years
 yin_yang = ["Yang", "Yin"]
 
 # Generate correct zodiac cycle from 1924-2100
@@ -11,7 +11,10 @@ start_year = 1924
 zodiac_data = []
 for year in range(start_year, 2100):
     zodiac_sign = zodiac_animals[(year - start_year) % 12]
-    element = elements[((year - 1924) % 10) // 2]  # Every two years share the same element
+    
+    # ✅ Corrected Element Calculation
+    element = elements[((year - 1924) // 2) % 5]  # Elements change every two years
+    
     yin_yang_polarity = yin_yang[(year - start_year) % 2]
     zodiac_data.append({"Year": year, "Zodiac": zodiac_sign, "Element": element, "Yin/Yang": yin_yang_polarity})
 
@@ -85,10 +88,6 @@ st.subheader(f"Your Chinese Zodiac: {zodiac_sign} ({element}, {yin_yang_polarity
 st.write(f"**Personality:** {zodiac_traits[zodiac_sign]['Personality']}")
 st.write(f"**Strengths:** {zodiac_traits[zodiac_sign]['Strengths']}")
 st.write(f"**Weaknesses:** {zodiac_traits[zodiac_sign]['Weaknesses']}")
-
-# ✅ Check for Accuracy
-if birth_year == 1963:
-    st.warning("Correction: Rabbit (Water, Yin) ✅")
 
 # ❤️ Compatibility Checker
 st.subheader("🔮 Check Compatibility with Another Person")
